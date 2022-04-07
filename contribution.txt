@@ -1,1 +1,11 @@
+Milestone 1
+Our progress for Milestone 1 is to create grammar and start working on design of the language.
 
+Design and Documentation: Navya and Manish
+Grammar: Kanti, Shubham
+
+Milestone 2 
+Lexer: Shubham
+Parser: Kanti
+Compilation and Integration: Navya
+Script Testing: Manish
