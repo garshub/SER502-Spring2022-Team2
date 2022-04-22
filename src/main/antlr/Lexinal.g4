@@ -104,17 +104,21 @@ MORE_THAN_OR_EQUL : '>=';
 NOT_EQUL_TO       : 'not';
 IS_EQUL_TO        : '==';
 
-// Accepts lower case and upper case letters.
+// --lower case and upper case letters.
 IDENTIFIER
 	: [a-zA-Z_] [a-zA-Z_0-9]*
 	;
 
-//  Valid Strings
+// --valid Strings
 VALID_STRING
     : ':' [a-zA-Z0-9]* ':'
     ;
 
+// --assignment operator
 EQUALS_TO   : '=';
 
+// --defining whitespaces
 WHITE_SPACES    : [ \t\r\n]+ -> skip; // skip spaces, tabs and newline
+
+// --comment syntax
 Comment : ('#' ~[\r\n]* | '/#' .*? '#/') -> skip;
