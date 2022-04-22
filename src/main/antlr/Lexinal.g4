@@ -15,13 +15,14 @@ command
 	: (if_expr|while_expr|print|expr)
 	;
 
-// --assihnments
+// --assignments
 expr
 	: 'int' IDENTIFIER (EQUALS_TO num_expr)?              # integerAssignment
 	| 'boolean' IDENTIFIER (EQUALS_TO bool_expr)?         # booleanAssignment
 	| 'string' IDENTIFIER (EQUALS_TO VALID_STRING)?       # stringAssignment
 	| IDENTIFIER EQUALS_TO num_expr                       # integerAssignment
 	| IDENTIFIER EQUALS_TO bool_expr                      # booleanAssignment
+	| IDENTIFIER EQUALS_TO ternary_expr                   # ternaryExpression
     ;
 
 // --boolean expressions
@@ -71,6 +72,43 @@ else_expr
 // --while(condition) expression
 while_expr
     : 'while' cond_expr block 'end-while'
+    ;
+// --for loop
+
+for_enhanced
+    : 'for' IDENTIFIER 'in' 'range' '(' rangeVal ';' rangeVal ')' block
+    ;
+
+rangeVal
+	: IDENTIFIER
+	| DIGITS
+	;
+
+for_loop
+    : 'for' '(' assignment_command ';' bool_expr ';' variable_change_part ')' block
+    ;
+
+
+variable_change_part : increment_expression
+                        | decrement_expression
+                        |IDENTIFIER EQUALS_TO num_expr;
+
+decrement_expression : IDENTIFIER decrement_operator
+                       | decrement_operator IDENTIFIER;
+
+
+increment_expression : IDENTIFIER increment_operator
+                       | increment_operator IDENTIFIER;
+
+decrement_operator : '--';
+increment_operator : '++';
+
+assignment_command
+    : 'int' IDENTIFIER EQUALS_TO num_expr
+    ;
+
+ternary_expr
+    : cond_expr '?' num_expr ':' num_expr
     ;
 
 // --print statement
