@@ -66,12 +66,12 @@ if_expr
 
 // --else if (condition) expression
 else_if_expr
-    : 'elseIf' cond_expr block
+    : 'elseIf' cond_expr block 'end-elseIf'
     ;
 
 // --else expression
 else_expr
-    : 'else' block
+    : 'else' block 'end-else'
     ;
 
 // --while(condition) expression
@@ -81,7 +81,7 @@ while_expr
 // --for loop
 
 for_enhanced
-    : 'for' IDENTIFIER 'in' 'range' '(' rangeVal ';' rangeVal ')' block
+    : 'for' IDENTIFIER 'in' 'range' '(' rangeVal ';' rangeVal ')' block 'end-for'
     ;
 
 rangeVal
@@ -90,7 +90,7 @@ rangeVal
 	;
 
 for_loop
-    : 'for' '(' assignment_command ';' bool_expr ';' variable_change_part ')' block
+    : 'for' '(' assignment_command ';' bool_expr ';' variable_change_part ')' block 'end-for'
     ;
 
 
