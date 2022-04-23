@@ -12,12 +12,13 @@ block
 
 // --commands
 command
-	: (if_expr|while_expr|print|expr)
+	: (if_expr|while_expr|for_enhanced|for_loop|print|assignment_expr)
 	;
 
 // --assignments
-expr
+assignment_expr
 	: 'int' IDENTIFIER (EQUALS_TO num_expr)?              # integerAssignment
+	| 'int' IDENTIFIER (EQUALS_TO ternary_expr)?              # integerAssignment
 	| 'boolean' IDENTIFIER (EQUALS_TO bool_expr)?         # booleanAssignment
 	| 'string' IDENTIFIER (EQUALS_TO VALID_STRING)?       # stringAssignment
 	| IDENTIFIER EQUALS_TO num_expr                       # integerAssignment
@@ -25,14 +26,19 @@ expr
 	| IDENTIFIER EQUALS_TO ternary_expr                   # ternaryExpression
     ;
 
+// --expressions
+exprs
+    : num_expr
+    | bool_expr
+    ;
+
 // --boolean expressions
 bool_expr
-    : bool_expr op=(AND|OR) bool_expr                   # booleanLogicalExpression
-    | bool_expr op=(IS_EQUL_TO|NOT_EQUL_TO) bool_expr   # booleanExpression
-    | comp_expr                                         # booleanComparisonExpression
-    | '(' bool_expr ')'                                 # booleanExpressionInBrackets
-    | BOOLEAN										    # primitiveBooleanValuesOnly
-    | IDENTIFIER										# booleanIdentifierOnlyExpression
+    : bool_expr op=(AND|OR|IS_EQUL_TO|NOT_EQUL_TO) bool_expr  # booleanLogicalExpression
+    | comp_expr                                               # booleanComparisonExpression
+    | '(' bool_expr ')'                                       # booleanExpressionInBrackets
+    | BOOLEAN										          # primitiveBooleanValuesOnly
+    | IDENTIFIER										      # booleanIdentifierOnlyExpression
     ;
 
 // --comparison expressions
@@ -42,8 +48,7 @@ comp_expr
 
 // --arithmetic expressions
 num_expr
-    : num_expr op=(MUL|DIV) num_expr                    # numberMultiplyDivideExpression
-    | num_expr op=(ADD|SUB) num_expr                    # numberAddSubExpression
+    : num_expr op=(ADD|SUB|MUL|DIV) num_expr            # numberMultiplyDivideExpression
     | '(' num_expr ')'                                  # numberBracketsExpression
     | SUB? DIGITS                                       # numberOnly
     | SUB? IDENTIFIER                                   # numberIdentifierOnly
@@ -108,7 +113,7 @@ assignment_command
     ;
 
 ternary_expr
-    : cond_expr '?' num_expr ':' num_expr
+    : cond_expr '?' exprs ':' exprs
     ;
 
 // --print statement
