@@ -18,12 +18,13 @@ command
 // --assignments
 assignment_expr
 	: 'int' IDENTIFIER (EQUALS_TO num_expr)?              # integerAssignment
-	| 'int' IDENTIFIER (EQUALS_TO ternary_expr)?              # integerAssignment
+	| 'int' IDENTIFIER EQUALS_TO ternary_expr             # integerAssignment
 	| 'boolean' IDENTIFIER (EQUALS_TO bool_expr)?         # booleanAssignment
+	| 'boolean' IDENTIFIER (EQUALS_TO ternary_expr)?      # booleanAssignment
 	| 'string' IDENTIFIER (EQUALS_TO VALID_STRING)?       # stringAssignment
+	| 'string' IDENTIFIER (EQUALS_TO ternary_expr)?       # stringAssignment
 	| IDENTIFIER EQUALS_TO num_expr                       # integerAssignment
 	| IDENTIFIER EQUALS_TO bool_expr                      # booleanAssignment
-	| IDENTIFIER EQUALS_TO ternary_expr                   # ternaryExpression
     ;
 
 // --expressions
@@ -114,6 +115,8 @@ assignment_command
 
 ternary_expr
     : cond_expr '?' exprs ':' exprs
+    | cond_expr '?' BOOLEAN ':' BOOLEAN
+    | cond_expr '?' VALID_STRING ':' VALID_STRING
     ;
 
 // --print statement
