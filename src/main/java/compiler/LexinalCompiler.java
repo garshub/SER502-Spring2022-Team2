@@ -27,8 +27,8 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         return variableList.contains(namedVariable);
     }
 
-    public void missingVariableError(String identifier){
-        System.err.println("Compiletime error: Variable " +identifier+ " not defined. Did you forget to declare variable " + identifier + "?");
+    public void missingVariableError(String identifier) {
+        System.err.println("Compiletime error: Variable " + identifier + " not defined. Did you forget to declare variable " + identifier + "?");
         System.exit(1);
     }
 
@@ -51,25 +51,23 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     public Object visitIntegerAssignment(LexinalParser.IntegerAssignmentContext ctx) {
         String identifier = ctx.IDENTIFIER().getText();
 
-        if(ctx.getText().contains("int")) {
+        if (ctx.getText().contains("int")) {
             addVariableToList(identifier);
-        }
-        else if(!doesVariableExist(identifier)) {
+        } else if (!doesVariableExist(identifier)) {
             missingVariableError(identifier);
         }
 
-        if(ctx.EQUALS_TO() != null) {
+        if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
             visit(ctx.num_expr());
             visit(ctx.ternary_expr());
-        }
-        else {
+        } else {
             //assign default value 0
-            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION +" " +
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
                     Constants.ACCUMULATOR_REGISTER + " " + Constants.DEFAULT_INT);
         }
 
-        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION +" " +
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
                 identifier + " " + Constants.ACCUMULATOR_REGISTER);
 
         return null;
@@ -79,25 +77,23 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     public Object visitBooleanAssignment(LexinalParser.BooleanAssignmentContext ctx) {
         String identifier = ctx.IDENTIFIER().getText();
 
-        if(ctx.getText().contains("boolean")) {
+        if (ctx.getText().contains("boolean")) {
             addVariableToList(identifier);
-        }
-        else if(!doesVariableExist(identifier)) {
+        } else if (!doesVariableExist(identifier)) {
             missingVariableError(identifier);
         }
 
-        if(ctx.EQUALS_TO() != null) {
+        if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
             visit(ctx.bool_expr());
             visit(ctx.ternary_expr());
-        }
-        else {
+        } else {
             //assign default value false
-            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION +" " +
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
                     Constants.ACCUMULATOR_REGISTER + " " + Constants.DEFAULT_BOOL);
         }
 
-        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION +" " +
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
                 identifier + " " + Constants.ACCUMULATOR_REGISTER);
 
         return null;
@@ -107,25 +103,23 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     public Object visitStringAssignment(LexinalParser.StringAssignmentContext ctx) {
         String identifier = ctx.IDENTIFIER().getText();
 
-        if(ctx.getText().contains("string")) {
+        if (ctx.getText().contains("string")) {
             addVariableToList(identifier);
-        }
-        else if(!doesVariableExist(identifier)) {
+        } else if (!doesVariableExist(identifier)) {
             missingVariableError(identifier);
         }
 
-        if(ctx.EQUALS_TO() != null) {
+        if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
             visit(ctx.VALID_STRING());
             visit(ctx.ternary_expr());
-        }
-        else {
+        } else {
             //assign default value ""
-            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION +" " +
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
                     Constants.ACCUMULATOR_REGISTER + " " + Constants.DEFAULT_STRING);
         }
 
-        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION +" " +
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
                 identifier + " " + Constants.ACCUMULATOR_REGISTER);
 
         return null;
@@ -149,10 +143,9 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         String identifier = ctx.IDENTIFIER().getText();
 
-        if(doesVariableExist(identifier)) {
-            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER + " "  + identifier);
-        }
-        else {
+        if (doesVariableExist(identifier)) {
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER + " " + identifier);
+        } else {
             missingVariableError(identifier);
         }
         return null;
@@ -160,7 +153,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitPrimitiveBooleanValuesOnly(LexinalParser.PrimitiveBooleanValuesOnlyContext ctx) {
-        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER +" "+ ctx.BOOLEAN().getText());
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER + " " + ctx.BOOLEAN().getText());
         return null;
     }
 
@@ -246,22 +239,70 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitNumberMultiplyDivideExpression(LexinalParser.NumberMultiplyDivideExpressionContext ctx) {
-        return super.visitNumberMultiplyDivideExpression(ctx);
+
+        visit(ctx.num_expr(0));
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + Constants.REGISTER_TWO + " "
+                + Constants.ACCUMULATOR_REGISTER);
+        visit(ctx.num_expr(1));
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + Constants.REGISTER_THREE + " "
+                + Constants.ACCUMULATOR_REGISTER);
+
+        switch (ctx.op.getType()) {
+            case LexinalParser.ADD -> intermediateCode.addIntermediateOutput(Constants.ADDITION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " "
+                    + Constants.REGISTER_TWO + " "
+                    + Constants.REGISTER_THREE);
+            case LexinalParser.SUB -> intermediateCode.addIntermediateOutput(Constants.SUBTRACTION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " "
+                    + Constants.REGISTER_TWO + " "
+                    + Constants.REGISTER_THREE);
+            case LexinalParser.MUL -> intermediateCode.addIntermediateOutput(Constants.MULTIPLICATION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " "
+                    + Constants.REGISTER_TWO + " "
+                    + Constants.REGISTER_THREE);
+            case LexinalParser.DIV -> intermediateCode.addIntermediateOutput(Constants.DIVISION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " "
+                    + Constants.REGISTER_TWO + " "
+                    + Constants.REGISTER_THREE);
+        }
+
+        return null;
     }
 
     @Override
     public Object visitNumberIdentifierOnly(LexinalParser.NumberIdentifierOnlyContext ctx) {
-        return super.visitNumberIdentifierOnly(ctx);
+        String identifier = ctx.IDENTIFIER().getText();
+        if (doesVariableExist(identifier)) {
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER + " " + identifier);
+            if (ctx.SUB() != null) {
+                intermediateCode.addIntermediateOutput(Constants.UNARY_MINUS + " " + Constants.ACCUMULATOR_REGISTER);
+            }
+        } else {
+            missingVariableError(identifier);
+        }
+        return null;
     }
 
     @Override
     public Object visitNumberBracketsExpression(LexinalParser.NumberBracketsExpressionContext ctx) {
-        return super.visitNumberBracketsExpression(ctx);
+        visit(ctx.num_expr());
+        return null;
     }
 
     @Override
     public Object visitNumberOnly(LexinalParser.NumberOnlyContext ctx) {
-        return super.visitNumberOnly(ctx);
+        if(ctx.DIGITS() != null && ctx.DIGITS().getText() != null){
+            String value = ctx.DIGITS().getText();
+            int intVal = Integer.parseInt(value);
+            if (ctx.SUB() != null) {
+                intVal *= -1;
+            }
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER + " " + intVal);
+        }
+
+        return null;
     }
 
     @Override

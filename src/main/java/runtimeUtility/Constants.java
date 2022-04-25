@@ -6,6 +6,7 @@ public class Constants {
     public static final String DEFAULT_INT = "0";
     public static final String DEFAULT_BOOL = "FALSE";
     public static final String DEFAULT_STRING = "";
+    public static final String UNARY_MINUS = "UNARY";
 
     //accumulator
     public static final String ACCUMULATOR_REGISTER = "ACC";
