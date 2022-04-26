@@ -426,6 +426,13 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     public Object visitPrint(LexinalParser.PrintContext ctx) {
 
         // : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
+        // | 'print' '(' VALID_STRING ',' (IDENTIFIER|BOOLEAN|VALID_STRING|DIGITS) ')'
+
+        if (ctx.VALID_STRING() != null){
+            visit(ctx.VALID_STRING(0));
+            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING(0).getText());
+        }
+
         if (ctx.IDENTIFIER() != null) {
             if (doesVariableExist(ctx.IDENTIFIER().getText())) {
                 intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.IDENTIFIER().getText());
@@ -442,8 +449,6 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         } else if (ctx.bool_expr() != null) {
             visit(ctx.bool_expr());
             intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER);
-        } else if (ctx.VALID_STRING() != null) {
-            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING().getText());
         }
 
         return null;

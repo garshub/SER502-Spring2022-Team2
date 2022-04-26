@@ -122,6 +122,7 @@ ternary_expr
 // --print statement
 print
     : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
+    | 'print' '(' VALID_STRING ',' (IDENTIFIER|BOOLEAN|VALID_STRING|DIGITS) ')'
     ;
 
 // --numbers > 0.

@@ -50,8 +50,6 @@ public class DataType {
 
     @Override
     public String toString() {
-        return "DataType{" +
-                "object=" + object +
-                '}';
+        return object.toString();
     }
 }

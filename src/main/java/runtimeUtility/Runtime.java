@@ -15,16 +15,13 @@ public class Runtime {
 
     public Runtime(String intermediateCode) {
         this.intermediateCode = Arrays.asList(intermediateCode.split("\\n"));
-        //System.out.println("intermediate code"+ this.intermediateCode) ;
     }
 
-    public void execute() {
+    public void execute() throws Exception {
         initializeStackMemory();
 
         while (programCounter < intermediateCode.size()) {
-
             programCounter = executeInstructionHandler(intermediateCode.get(programCounter), programCounter) + 1;
-
         }
 
     }
@@ -33,7 +30,7 @@ public class Runtime {
         memoryStack.push(new HashMap<>());
     }
 
-    private int executeInstructionHandler(String currentInstruction, int programCounter) {
+    private int executeInstructionHandler(String currentInstruction, int programCounter) throws Exception {
 
         String[] instructions = currentInstruction.split("\\s");
         String instructionType = instructions[0];
@@ -41,9 +38,35 @@ public class Runtime {
         switch (instructionType) {
             case STORE_INSTRUCTION -> executeStoreInstruction(instructions);
             case WRITE_INSTRUCTION -> executePrintInstruction(instructions);
+            case ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION -> executeArithmeticOperations(instructions);
+            default -> throw new IllegalStateException("Unexpected value: " + instructionType);
         }
 
         return programCounter;
+    }
+
+    private void executeArithmeticOperations(String[] instruction) throws Exception {
+
+        DataType left = getWildCardValue(instruction[2]);
+        DataType right = getWildCardValue(instruction[3]);
+        String leftDatatype = left.getDataType();
+        String rightDatatype = right.getDataType();
+
+        if (leftDatatype != rightDatatype) {
+            throw new Exception("Data mismatch");
+        } else if (leftDatatype == rightDatatype && !leftDatatype.equalsIgnoreCase("integer")) {
+            throw new Exception("Arithmetic exception Can't be performed on boolean type");
+        } else {
+            int leftOperand = left.dataAsInteger();
+            int rightOperand = right.dataAsInteger();
+
+            switch (instruction[0]) {
+                case ADDITION -> setValue(instruction[1], new DataType(leftOperand + rightOperand));
+                case SUBTRACTION -> setValue(instruction[1], new DataType(leftOperand - rightOperand));
+                case MULTIPLICATION -> setValue(instruction[1], new DataType(leftOperand * rightOperand));
+                case DIVISION -> setValue(instruction[1], new DataType(leftOperand / rightOperand));
+            }
+        }
     }
 
     private void executeStoreInstruction(String[] instruction) {
@@ -57,7 +80,7 @@ public class Runtime {
     private void executePrintInstruction(String[] instruction) {
         DataType printData = getWildCardValue(instruction[1]);
 
-        if (null != printData) {
+        if (printData != null) {
             try {
                 generateOutput(printData.toString());
             } catch (Exception e) {
@@ -81,9 +104,16 @@ public class Runtime {
             return new DataType(Integer.parseInt(value));
         } else if (isBoolean(value)) {
             return new DataType(Boolean.parseBoolean(value));
+        } else if (isString(value)) {
+            return new DataType(cleanString(value));
         } else {
             return getValue(value);
         }
+    }
+
+    private String cleanString(String value){
+        int length = value.length();
+        return value.substring(1, length - 1);
     }
 
     private boolean isInt(String value) {
@@ -104,6 +134,10 @@ public class Runtime {
         }
     }
 
+    private boolean isString(String value) {
+        return value.startsWith(":") && value.endsWith(":");
+    }
+
 
     private DataType getValue(String identifier) {
         HashMap<String, DataType> hashMap = memoryStack.peek();
@@ -113,7 +147,6 @@ public class Runtime {
     private void setValue(String identifier, DataType value) {
         HashMap<String, DataType> hashMap = memoryStack.peek();
         hashMap.put(identifier, value);
-        //System.out.println(memoryStack);
     }
 
 
