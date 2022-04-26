@@ -34,17 +34,17 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitProgram(LexinalParser.ProgramContext ctx) {
-        return super.visitProgram(ctx);
+        return super.visitChildren(ctx);
     }
 
     @Override
     public Object visitBlock(LexinalParser.BlockContext ctx) {
-        return super.visitBlock(ctx);
+        return super.visitChildren(ctx);
     }
 
     @Override
     public Object visitCommand(LexinalParser.CommandContext ctx) {
-        return super.visitCommand(ctx);
+        return super.visitChildren(ctx);
     }
 
     @Override
@@ -59,8 +59,11 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         if (ctx.EQUALS_TO() != null) {
             //if initialization done during declaration
-            visit(ctx.num_expr());
-            visit(ctx.ternary_expr());
+            if(ctx.getText().contains("?") && ctx.getText().contains(":")){
+                visit(ctx.ternary_expr());
+            } else {
+                visit(ctx.num_expr());
+            }
         } else {
             //assign default value 0
             intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
@@ -85,8 +88,11 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
-            visit(ctx.bool_expr());
-            visit(ctx.ternary_expr());
+            if(ctx.getText().contains("?") && ctx.getText().contains(":")){
+                visit(ctx.ternary_expr());
+            } else {
+                visit(ctx.bool_expr());
+            }
         } else {
             //assign default value false
             intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
@@ -111,8 +117,13 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
-            visit(ctx.VALID_STRING());
-            visit(ctx.ternary_expr());
+            if(ctx.getText().contains("?") && ctx.getText().contains(":")){
+                visit(ctx.ternary_expr());
+            } else {
+                //visit(ctx.VALID_STRING());
+                intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
+                        Constants.ACCUMULATOR_REGISTER + " " + ctx.VALID_STRING().getText());
+            }
         } else {
             //assign default value ""
             intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
@@ -407,7 +418,8 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitTernary_expr(LexinalParser.Ternary_exprContext ctx) {
-        return super.visitTernary_expr(ctx);
+        //TODO
+        return null;
     }
 
     @Override

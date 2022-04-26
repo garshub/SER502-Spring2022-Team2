@@ -21,7 +21,7 @@ public class Runtime {
     public void execute() {
         initializeStackMemory();
 
-        while(programCounter < intermediateCode.size()) {
+        while (programCounter < intermediateCode.size()) {
 
             programCounter = executeInstructionHandler(intermediateCode.get(programCounter), programCounter) + 1;
 
@@ -47,10 +47,9 @@ public class Runtime {
     }
 
     private void executeStoreInstruction(String[] instruction) {
-        if(instruction[1].equals(ACCUMULATOR_REGISTER)) {
+        if (instruction[1].equals(ACCUMULATOR_REGISTER)) {
             setValue(ACCUMULATOR_REGISTER, getWildCardValue(instruction[2]));
-        }
-        else {
+        } else {
             setValue(instruction[1], getValue(instruction[2]));
         }
     }
@@ -67,7 +66,7 @@ public class Runtime {
         }
     }
 
-    private void generateOutput (String output) {
+    private void generateOutput(String output) {
         this.output += output + "\n";
     }
 
@@ -76,16 +75,13 @@ public class Runtime {
     }
 
     private DataType getWildCardValue(String value) {
-        if(value.equals("NULL")) {
+        if (value.equals("NULL")) {
             return null;
-        }
-        else if(isInt(value)) {
+        } else if (isInt(value)) {
             return new DataType(Integer.parseInt(value));
-        }
-        else if(isBoolean(value)) {
+        } else if (isBoolean(value)) {
             return new DataType(Boolean.parseBoolean(value));
-        }
-        else {
+        } else {
             return getValue(value);
         }
     }
@@ -119,7 +115,6 @@ public class Runtime {
         hashMap.put(identifier, value);
         //System.out.println(memoryStack);
     }
-
 
 
 }

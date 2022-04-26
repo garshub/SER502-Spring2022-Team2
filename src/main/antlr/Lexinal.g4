@@ -2,7 +2,7 @@ grammar Lexinal;
 
 // --program
 program
-	: block
+	: 'start' block 'end'
 	;
 
 // --block

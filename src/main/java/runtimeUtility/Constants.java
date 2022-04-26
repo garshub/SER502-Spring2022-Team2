@@ -5,7 +5,7 @@ public class Constants {
     //default values
     public static final String DEFAULT_INT = "0";
     public static final String DEFAULT_BOOL = "FALSE";
-    public static final String DEFAULT_STRING = "";
+    public static final String DEFAULT_STRING = "::";
     public static final String UNARY_MINUS = "UNARY";
 
     //accumulator

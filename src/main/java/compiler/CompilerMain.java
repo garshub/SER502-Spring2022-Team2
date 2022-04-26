@@ -16,8 +16,7 @@ import java.util.List;
 public class CompilerMain {
     public static void main(String[] args) {
         try {
-            if (args.length > 0)
-            {
+            if (args.length > 0) {
                 // Takes the inputPath from the argument
                 String filePath = args[0];
                 // Extracts the lexinal code from .lxl file
@@ -48,4 +47,4 @@ public class CompilerMain {
         }
     }
 
-    }
+}
