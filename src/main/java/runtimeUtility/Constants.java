@@ -6,6 +6,7 @@ public class Constants {
     public static final String DEFAULT_INT = "0";
     public static final String DEFAULT_BOOL = "FALSE";
     public static final String DEFAULT_STRING = "";
+    public static final String UNARY_MINUS = "UNARY";
 
     //accumulator
     public static final String ACCUMULATOR_REGISTER = "ACC";
@@ -45,7 +46,7 @@ public class Constants {
     public static final String IF_END = "IF_END";
     public static final String ELSE_START = "ELSE_START";
     public static final String ELSE_END = "ELSE_END";
-    public static final String IF_ELSE = "IF_ELSE_START";
+    public static final String IF_ELSE_START = "IF_ELSE_START";
     public static final String IF_ELSE_END = "IF_ELSE_END";
     public static final String ELSE_IF_START = "ELSE_IF_START";
     public static final String ELSE_IF_END = "ELSE_IF_END";
