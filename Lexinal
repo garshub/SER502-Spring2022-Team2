@@ -1,0 +1,187 @@
+grammar Lexinal;
+
+// --program
+program
+	: block
+	;
+
+// --block
+block
+	: '{' command+ '}'
+	;
+
+// --commands
+command
+	: (if_expr|while_expr|print|expr)
+	;
+
+// --assignments
+expr
+	: 'int' IDENTIFIER (EQUALS_TO num_expr)?              # integerAssignment
+	| 'boolean' IDENTIFIER (EQUALS_TO bool_expr)?         # booleanAssignment
+	| 'string' IDENTIFIER (EQUALS_TO VALID_STRING)?       # stringAssignment
+	| IDENTIFIER EQUALS_TO num_expr                       # integerAssignment
+	| IDENTIFIER EQUALS_TO bool_expr                      # booleanAssignment
+    ;
+
+// --boolean expressions
+bool_expr
+    : bool_expr op=(AND|OR) bool_expr                   # booleanLogicalExpression
+    | bool_expr op=(IS_EQUL_TO|NOT_EQUL_TO) bool_expr   # booleanExpression
+    | comp_expr                                         # booleanComparisonExpression
+    | '(' bool_expr ')'                                 # booleanExpressionInBrackets
+    | BOOLEAN										    # primitiveBooleanValuesOnly
+    | IDENTIFIER										# booleanIdentifierOnlyExpression
+    ;
+
+// --comparison expressions
+comp_expr
+    : num_expr op=(GREATER_THAN|LESS_THAN|MORE_THAN_OR_EQUL|LESS_THAN_OR_EQUL|IS_EQUL_TO|NOT_EQUL_TO) num_expr  # numberComparisonExpression
+    ;
+
+// --arithmetic expressions
+num_expr
+    : num_expr op=(MUL|DIV) num_expr                    # numberMultiplyDivideExpression
+    | num_expr op=(ADD|SUB) num_expr                    # numberAddSubExpression
+    | '(' num_expr ')'                                  # numberBracketsExpression
+    | SUB? DIGITS                                       # numberOnly
+    | SUB? IDENTIFIER                                   # numberIdentifierOnly
+    ;
+
+// --conditional expression
+cond_expr
+    : '(' bool_expr ')'
+    ;
+
+// --if expression
+if_expr
+    : 'if' cond_expr block (else_if_expr)* (else_expr)? 'end-if'
+    ;
+
+// --else if (condition) expression
+else_if_expr
+    : 'elseIf' cond_expr block
+    ;
+
+// --else expression
+else_expr
+    : 'else' block
+    ;
+
+// --while(condition) expression
+while_expr
+    : 'while' cond_expr block 'end-while'
+    ;
+// --for loop
+
+for_enhanced
+    : 'for' IDENTIFIER 'in' 'range' '(' rangeVal ';' rangeVal ')' block
+    ;
+
+rangeVal
+	: IDENTIFIER
+	| DIGITS
+	;
+
+for_loop
+    : 'for' '(' assignment_command ';' condition ';' variable_change_part ')' block
+    ;
+
+
+variable_change_part : increment_expression
+                        | decrement_expression
+                        |IDENTIFIER EQUALS_TO expression;
+
+condition : expression comp_expr expression;
+
+decrement_expression : IDENTIFIER decrement_operator
+                       | decrement_operator IDENTIFIER;
+
+
+increment_expression : IDENTIFIER increment_operator
+                       | increment_operator IDENTIFIER;
+
+decrement_operator : '--';
+increment_operator : '++';
+
+assignment_command : IDENTIFIER EQUALS_TO expression;
+
+expression
+            :value operators expression
+            | '(' expression ')' operators expression
+            | value
+            | ternary_expression
+            ;
+
+
+ternary_expression :
+                    '(' condition ')' '?' expression ':' expression;
+value : DIGITS
+        | IDENTIFIER
+        ;
+
+boolean_operators : andOp
+                    | orOp
+                    | notOp
+                    ;
+
+operators : ADD
+            | SUB
+            | MUL
+            | DIV
+            | boolean_operators
+            ;
+
+andOp : 'and';
+orOp : 'or';
+notOp : 'not';
+
+// --print statement
+print
+    : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
+    ;
+
+// --numbers > 0.
+DIGITS
+	: [1-9] [0-9]*
+	| '0'
+	;
+
+// --Boolean value as true or false.
+BOOLEAN
+	: 'true'
+	| 'false'
+	;
+
+// --operators
+ADD               : '+';
+SUB               : '-';
+MUL               : '*';
+DIV               : '/';
+AND               : 'and';
+OR                : 'or';
+LESS_THAN         : '<';
+GREATER_THAN      : '>';
+LESS_THAN_OR_EQUL : '<=';
+MORE_THAN_OR_EQUL : '>=';
+NOT_EQUL_TO       : 'not';
+IS_EQUL_TO        : '==';
+
+// --lower case and upper case letters.
+IDENTIFIER
+	: [a-zA-Z_] [a-zA-Z_0-9]*
+	;
+
+// --valid Strings
+VALID_STRING
+    : ':' [a-zA-Z0-9]* ':'
+    ;
+
+// --assignment operator
+EQUALS_TO   : '=';
+
+// --defining whitespaces
+WHITE_SPACES    : [ \t\r\n]+ -> skip; // skip spaces, tabs and newline
+
+// --comment syntax
+Comment : ('#' ~[\r\n]* | '/#' .*? '#/') -> skip;
