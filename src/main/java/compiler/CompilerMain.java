@@ -8,39 +8,43 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 
 
 public class CompilerMain {
     public static void main(String[] args) {
         try {
-            if (args.length > 0) {
-                String path = args[0];
+            if (args.length > 0)
+            {
+                // Takes the inputPath from the argument
+                String filePath = args[0];
+                // Extracts the lexinal code from .lxl file
+                CharStream lexinalCode = CharStreams.fromFileName(filePath);
 
-                CharStream code = CharStreams.fromFileName(path);
-                LexinalLexer lexer = new LexinalLexer(code);
+                // Generates parser tree from lexinal code
+                LexinalLexer lexer = new LexinalLexer(lexinalCode);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 LexinalParser parser = new LexinalParser(tokens);
-                ParseTree tree = parser.program();
+                ParseTree pTree = parser.program();
 
-                LexinalCompiler d = new LexinalCompiler();
-                d.visit(tree);
-                List<String> intermediateCode = Arrays.asList(d.getOutput().split("\\n"));
-                if (intermediateCode.size() > 1) {
-                    PrintWriter writer = new PrintWriter(path.replace("lxl", "vlxl"), String.valueOf(UTF_8));
+                // Generates intermediate code
+                LexinalCompiler compiler = new LexinalCompiler();
+                compiler.visit(pTree);
+                List<String> intermediateCode = Arrays.asList(compiler.getOutput().split("\\n"));
+                System.out.println("Compile time: No of lines in intermediate code - " + intermediateCode.size());
+                if (intermediateCode.size() >= 1) {
+                    // Append the intermediate code to .vlxl file
+                    PrintWriter pw = new PrintWriter(filePath.replace("lxl", "vlxl"), StandardCharsets.UTF_8);
                     for (String s : intermediateCode) {
-                        writer.println(s);
+                        pw.println(s);
                     }
-                    writer.close();
+                    pw.close();
                 }
-
             }
         } catch (Exception e) {
-            System.out.println("Wrong Input file");
+            System.out.println("Compile time: Please enter valid input code file");
         }
     }
 
