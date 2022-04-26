@@ -58,7 +58,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         }
 
         if (ctx.EQUALS_TO() != null) {
-            //if initialization and assignment done during declaration
+            //if initialization done during declaration
             visit(ctx.num_expr());
             visit(ctx.ternary_expr());
         } else {
@@ -273,7 +273,9 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitNumberIdentifierOnly(LexinalParser.NumberIdentifierOnlyContext ctx) {
+
         String identifier = ctx.IDENTIFIER().getText();
+
         if (doesVariableExist(identifier)) {
             intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER + " " + identifier);
             if (ctx.SUB() != null) {
@@ -282,6 +284,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         } else {
             missingVariableError(identifier);
         }
+
         return null;
     }
 
@@ -293,7 +296,8 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitNumberOnly(LexinalParser.NumberOnlyContext ctx) {
-        if(ctx.DIGITS() != null && ctx.DIGITS().getText() != null){
+
+        if (ctx.DIGITS() != null && ctx.DIGITS().getText() != null) {
             String value = ctx.DIGITS().getText();
             int intVal = Integer.parseInt(value);
             if (ctx.SUB() != null) {
@@ -307,27 +311,53 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitCond_expr(LexinalParser.Cond_exprContext ctx) {
-        return super.visitCond_expr(ctx);
+        visit(ctx.bool_expr());
+        return null;
     }
 
     @Override
     public Object visitIf_expr(LexinalParser.If_exprContext ctx) {
-        return super.visitIf_expr(ctx);
+
+        intermediateCode.addIntermediateOutput(Constants.IF_ELSE_START);
+        intermediateCode.addIntermediateOutput(Constants.IF_START);
+        visit(ctx.cond_expr());
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.IF_END);
+        for (int i = 0; i < ctx.else_if_expr().size(); i++) {
+            visit(ctx.else_if_expr(i));
+        }
+        if (ctx.else_expr() != null) {
+            visit(ctx.else_expr());
+        }
+        intermediateCode.addIntermediateOutput(Constants.IF_ELSE_END);
+
+        return null;
     }
 
     @Override
     public Object visitElse_if_expr(LexinalParser.Else_if_exprContext ctx) {
-        return super.visitElse_if_expr(ctx);
+        intermediateCode.addIntermediateOutput(Constants.ELSE_IF_START);
+        visit(ctx.cond_expr());
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.ELSE_IF_END);
+        return null;
     }
 
     @Override
     public Object visitElse_expr(LexinalParser.Else_exprContext ctx) {
-        return super.visitElse_expr(ctx);
+        intermediateCode.addIntermediateOutput(Constants.ELSE_START);
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.ELSE_END);
+        return null;
     }
 
     @Override
     public Object visitWhile_expr(LexinalParser.While_exprContext ctx) {
-        return super.visitWhile_expr(ctx);
+        intermediateCode.addIntermediateOutput(Constants.WHILE_START);
+        visit(ctx.cond_expr());
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.WHILE_END);
+        return null;
     }
 
     @Override
@@ -382,7 +412,29 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitPrint(LexinalParser.PrintContext ctx) {
-        return super.visitPrint(ctx);
+
+        // : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
+        if (ctx.IDENTIFIER() != null) {
+            if (doesVariableExist(ctx.IDENTIFIER().getText())) {
+                intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.IDENTIFIER().getText());
+            } else {
+                missingVariableError(ctx.IDENTIFIER().getText());
+            }
+        } else if (ctx.DIGITS() != null) {
+            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.DIGITS().getText());
+        } else if (ctx.BOOLEAN() != null) {
+            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.BOOLEAN().getText());
+        } else if (ctx.num_expr() != null) {
+            visit(ctx.num_expr());
+            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER);
+        } else if (ctx.bool_expr() != null) {
+            visit(ctx.bool_expr());
+            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + Constants.ACCUMULATOR_REGISTER);
+        } else if (ctx.VALID_STRING() != null) {
+            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING().getText());
+        }
+
+        return null;
     }
 
     @Override
