@@ -383,7 +383,16 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitFor_loop(LexinalParser.For_loopContext ctx) {
-        return super.visitFor_loop(ctx);
+        visit(ctx.assignment_command());
+        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.FOR_LOOP_START);
+        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.COMPARISION_START);
+        visit(ctx.bool_expr());
+        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.COMPARISION_END);
+        visit(ctx.block());
+        visit(ctx.variable_change_part());
+        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.FOR_LOOP_END);
+        return null;
+        //return super.visitFor_loop(ctx);
     }
 
     @Override
