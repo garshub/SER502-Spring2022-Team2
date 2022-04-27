@@ -2,7 +2,7 @@ grammar Lexinal;
 
 // --program
 program
-	: block
+	: 'start' block 'end'
 	;
 
 // --block
@@ -12,27 +12,34 @@ block
 
 // --commands
 command
-	: (if_expr|while_expr|print|expr)
+	: (if_expr|while_expr|for_enhanced|for_loop|print|assignment_expr)
 	;
 
 // --assignments
-expr
+assignment_expr
 	: 'int' IDENTIFIER (EQUALS_TO num_expr)?              # integerAssignment
+	| 'int' IDENTIFIER EQUALS_TO ternary_expr             # integerAssignment
 	| 'boolean' IDENTIFIER (EQUALS_TO bool_expr)?         # booleanAssignment
+	| 'boolean' IDENTIFIER (EQUALS_TO ternary_expr)?      # booleanAssignment
 	| 'string' IDENTIFIER (EQUALS_TO VALID_STRING)?       # stringAssignment
+	| 'string' IDENTIFIER (EQUALS_TO ternary_expr)?       # stringAssignment
 	| IDENTIFIER EQUALS_TO num_expr                       # integerAssignment
 	| IDENTIFIER EQUALS_TO bool_expr                      # booleanAssignment
-	| IDENTIFIER EQUALS_TO ternary_expr                   # ternaryExpression
+    ;
+
+// --expressions
+exprs
+    : num_expr
+    | bool_expr
     ;
 
 // --boolean expressions
 bool_expr
-    : bool_expr op=(AND|OR) bool_expr                   # booleanLogicalExpression
-    | bool_expr op=(IS_EQUL_TO|NOT_EQUL_TO) bool_expr   # booleanExpression
-    | comp_expr                                         # booleanComparisonExpression
-    | '(' bool_expr ')'                                 # booleanExpressionInBrackets
-    | BOOLEAN										    # primitiveBooleanValuesOnly
-    | IDENTIFIER										# booleanIdentifierOnlyExpression
+    : bool_expr op=(AND|OR|IS_EQUL_TO|NOT_EQUL_TO) bool_expr  # booleanLogicalExpression
+    | comp_expr                                               # booleanComparisonExpression
+    | '(' bool_expr ')'                                       # booleanExpressionInBrackets
+    | BOOLEAN										          # primitiveBooleanValuesOnly
+    | IDENTIFIER										      # booleanIdentifierOnlyExpression
     ;
 
 // --comparison expressions
@@ -42,8 +49,7 @@ comp_expr
 
 // --arithmetic expressions
 num_expr
-    : num_expr op=(MUL|DIV) num_expr                    # numberMultiplyDivideExpression
-    | num_expr op=(ADD|SUB) num_expr                    # numberAddSubExpression
+    : num_expr op=(ADD|SUB|MUL|DIV) num_expr            # numberMultiplyDivideExpression
     | '(' num_expr ')'                                  # numberBracketsExpression
     | SUB? DIGITS                                       # numberOnly
     | SUB? IDENTIFIER                                   # numberIdentifierOnly
@@ -61,12 +67,12 @@ if_expr
 
 // --else if (condition) expression
 else_if_expr
-    : 'elseIf' cond_expr block
+    : 'elseIf' cond_expr block 'end-elseIf'
     ;
 
 // --else expression
 else_expr
-    : 'else' block
+    : 'else' block 'end-else'
     ;
 
 // --while(condition) expression
@@ -76,7 +82,7 @@ while_expr
 // --for loop
 
 for_enhanced
-    : 'for' IDENTIFIER 'in' 'range' '(' rangeVal ';' rangeVal ')' block
+    : 'for' IDENTIFIER 'in' 'range' '(' rangeVal ';' rangeVal ')' block 'end-for'
     ;
 
 rangeVal
@@ -85,7 +91,7 @@ rangeVal
 	;
 
 for_loop
-    : 'for' '(' assignment_command ';' bool_expr ';' variable_change_part ')' block
+    : 'for' '(' assignment_command ';' bool_expr ';' variable_change_part ')' block 'end-for'
     ;
 
 
@@ -108,12 +114,15 @@ assignment_command
     ;
 
 ternary_expr
-    : cond_expr '?' num_expr ':' num_expr
+    : cond_expr '?' exprs ':' exprs
+    | cond_expr '?' BOOLEAN ':' BOOLEAN
+    | cond_expr '?' VALID_STRING ':' VALID_STRING
     ;
 
 // --print statement
 print
     : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
+    | 'print' '(' VALID_STRING ',' (IDENTIFIER|BOOLEAN|VALID_STRING|DIGITS) ')'
     ;
 
 // --numbers > 0.

@@ -1,4 +1,5 @@
-// Generated from C:/Users/gargs/OneDrive - Arizona State University/Desktop/Stuff/Class Stuff/SER 502/Project/Project_Workspace/src/main/antlr\Lexinal.g4 by ANTLR 4.9.2
+// Generated from C:/Users/gargs/OneDrive - Arizona State University/Desktop/Stuff/Class Stuff/SER 502/Project/Project_Workspace/src/main/antlr\Lexinal.g4 by ANTLR 4.10.1
+package gen;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -29,32 +30,31 @@ public interface LexinalVisitor<T> extends ParseTreeVisitor<T> {
 	T visitCommand(LexinalParser.CommandContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code integerAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIntegerAssignment(LexinalParser.IntegerAssignmentContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code booleanAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBooleanAssignment(LexinalParser.BooleanAssignmentContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code stringAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStringAssignment(LexinalParser.StringAssignmentContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ternaryExpression}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * Visit a parse tree produced by {@link LexinalParser#exprs}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTernaryExpression(LexinalParser.TernaryExpressionContext ctx);
+	T visitExprs(LexinalParser.ExprsContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code booleanExpressionInBrackets}
 	 * labeled alternative in {@link LexinalParser#bool_expr}.
@@ -91,13 +91,6 @@ public interface LexinalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBooleanComparisonExpression(LexinalParser.BooleanComparisonExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code booleanExpression}
-	 * labeled alternative in {@link LexinalParser#bool_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBooleanExpression(LexinalParser.BooleanExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code numberComparisonExpression}
 	 * labeled alternative in {@link LexinalParser#comp_expr}.
 	 * @param ctx the parse tree
@@ -132,13 +125,6 @@ public interface LexinalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumberOnly(LexinalParser.NumberOnlyContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numberAddSubExpression}
-	 * labeled alternative in {@link LexinalParser#num_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LexinalParser#cond_expr}.
 	 * @param ctx the parse tree

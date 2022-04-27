@@ -1,4 +1,5 @@
-// Generated from C:/Users/gargs/OneDrive - Arizona State University/Desktop/Stuff/Class Stuff/SER 502/Project/Project_Workspace/src/main/antlr\Lexinal.g4 by ANTLR 4.9.2
+// Generated from C:/Users/gargs/OneDrive - Arizona State University/Desktop/Stuff/Class Stuff/SER 502/Project/Project_Workspace/src/main/antlr\Lexinal.g4 by ANTLR 4.10.1
+package gen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -38,52 +39,50 @@ public interface LexinalListener extends ParseTreeListener {
 	void exitCommand(LexinalParser.CommandContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code integerAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterIntegerAssignment(LexinalParser.IntegerAssignmentContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code integerAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitIntegerAssignment(LexinalParser.IntegerAssignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code booleanAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterBooleanAssignment(LexinalParser.BooleanAssignmentContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code booleanAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitBooleanAssignment(LexinalParser.BooleanAssignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code stringAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterStringAssignment(LexinalParser.StringAssignmentContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code stringAssignment}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * labeled alternative in {@link LexinalParser#assignment_expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitStringAssignment(LexinalParser.StringAssignmentContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ternaryExpression}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * Enter a parse tree produced by {@link LexinalParser#exprs}.
 	 * @param ctx the parse tree
 	 */
-	void enterTernaryExpression(LexinalParser.TernaryExpressionContext ctx);
+	void enterExprs(LexinalParser.ExprsContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ternaryExpression}
-	 * labeled alternative in {@link LexinalParser#expr}.
+	 * Exit a parse tree produced by {@link LexinalParser#exprs}.
 	 * @param ctx the parse tree
 	 */
-	void exitTernaryExpression(LexinalParser.TernaryExpressionContext ctx);
+	void exitExprs(LexinalParser.ExprsContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code booleanExpressionInBrackets}
 	 * labeled alternative in {@link LexinalParser#bool_expr}.
@@ -145,18 +144,6 @@ public interface LexinalListener extends ParseTreeListener {
 	 */
 	void exitBooleanComparisonExpression(LexinalParser.BooleanComparisonExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code booleanExpression}
-	 * labeled alternative in {@link LexinalParser#bool_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanExpression(LexinalParser.BooleanExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code booleanExpression}
-	 * labeled alternative in {@link LexinalParser#bool_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanExpression(LexinalParser.BooleanExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code numberComparisonExpression}
 	 * labeled alternative in {@link LexinalParser#comp_expr}.
 	 * @param ctx the parse tree
@@ -216,18 +203,6 @@ public interface LexinalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumberOnly(LexinalParser.NumberOnlyContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code numberAddSubExpression}
-	 * labeled alternative in {@link LexinalParser#num_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code numberAddSubExpression}
-	 * labeled alternative in {@link LexinalParser#num_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LexinalParser#cond_expr}.
 	 * @param ctx the parse tree

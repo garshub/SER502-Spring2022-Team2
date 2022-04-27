@@ -1,4 +1,5 @@
-// Generated from C:/Users/gargs/OneDrive - Arizona State University/Desktop/Stuff/Class Stuff/SER 502/Project/Project_Workspace/src/main/antlr\Lexinal.g4 by ANTLR 4.9.2
+// Generated from C:/Users/gargs/OneDrive - Arizona State University/Desktop/Stuff/Class Stuff/SER 502/Project/Project_Workspace/src/main/antlr\Lexinal.g4 by ANTLR 4.10.1
+package gen;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -87,13 +88,13 @@ public class LexinalBaseListener implements LexinalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTernaryExpression(LexinalParser.TernaryExpressionContext ctx) { }
+	@Override public void enterExprs(LexinalParser.ExprsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTernaryExpression(LexinalParser.TernaryExpressionContext ctx) { }
+	@Override public void exitExprs(LexinalParser.ExprsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -159,18 +160,6 @@ public class LexinalBaseListener implements LexinalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBooleanExpression(LexinalParser.BooleanExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBooleanExpression(LexinalParser.BooleanExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNumberComparisonExpression(LexinalParser.NumberComparisonExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -226,18 +215,6 @@ public class LexinalBaseListener implements LexinalListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumberOnly(LexinalParser.NumberOnlyContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
