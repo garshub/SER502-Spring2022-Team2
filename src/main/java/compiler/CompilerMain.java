@@ -43,6 +43,7 @@ public class CompilerMain {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Compile time: Please enter valid input code file");
         }
     }

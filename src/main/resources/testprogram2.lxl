@@ -1,8 +1,11 @@
 start
 {
-    int a = 10
-    int b = 20
-    int c = (a < b) ? a : b
-    print(c)
+    int a = 0
+    while(a < 10)
+    {
+        a = a+1
+        print(a)
+    }
+    end-while
 }
 end

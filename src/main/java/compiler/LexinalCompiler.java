@@ -322,7 +322,9 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitCond_expr(LexinalParser.Cond_exprContext ctx) {
+        intermediateCode.addIntermediateOutput(Constants.CONDITION_START);
         visit(ctx.bool_expr());
+        intermediateCode.addIntermediateOutput(Constants.CONDITION_END);
         return null;
     }
 
@@ -429,8 +431,12 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         // | 'print' '(' VALID_STRING ',' (IDENTIFIER|BOOLEAN|VALID_STRING|DIGITS) ')'
 
         if (ctx.VALID_STRING() != null){
-            visit(ctx.VALID_STRING(0));
-            intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING(0).getText());
+            if(ctx.getText().contains(",") && ctx.IDENTIFIER() != null){
+                visit(ctx.VALID_STRING(0));
+                intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING(0).getText());
+            } else if (ctx.getText().startsWith(":") && ctx.getText().endsWith(":")){
+                intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.getText());
+            }
         }
 
         if (ctx.IDENTIFIER() != null) {
