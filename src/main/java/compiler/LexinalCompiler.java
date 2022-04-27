@@ -373,12 +373,22 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitFor_enhanced(LexinalParser.For_enhancedContext ctx) {
-        return super.visitFor_enhanced(ctx);
+        intermediateCode.addIntermediateOutput(Constants.FOR_ENHANCED_START);
+        visit(ctx.IDENTIFIER());
+        intermediateCode.addIntermediateOutput(Constants.RANGE_BLOCK_START);
+        visit(ctx.rangeVal());
+        visit(ctx.rangeVal());
+        intermediateCode.addIntermediateOutput(Constants.RANGE_BLOCK_END);
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.FOR_ENHANCED_END);
+        return null;
     }
 
     @Override
     public Object visitRangeVal(LexinalParser.RangeValContext ctx) {
-        return super.visitRangeVal(ctx);
+        visit(ctx.IDENTIFIER());
+        visit(ctx.DIGITS());
+        return null;
     }
 
     @Override
@@ -392,12 +402,21 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         visit(ctx.variable_change_part());
         intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.FOR_LOOP_END);
         return null;
-        //return super.visitFor_loop(ctx);
     }
 
     @Override
     public Object visitVariable_change_part(LexinalParser.Variable_change_partContext ctx) {
-        return super.visitVariable_change_part(ctx);
+        if (ctx.increment_expression() != null) {
+            visit(ctx.increment_expression())
+        }
+        else
+        visit(ctx.decrement_expression());
+
+        if (ctx.EQUALS_TO() != null) {
+            visit(ctx.num_expr());
+        }
+
+        return null;
     }
 
     @Override
@@ -422,7 +441,17 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitAssignment_command(LexinalParser.Assignment_commandContext ctx) {
-        return super.visitAssignment_command(ctx);
+        String identifier = ctx.IDENTIFIER().getText();
+
+        if (ctx.getText().contains("int")) {
+            addVariableToList(identifier);
+        } else if (!doesVariableExist(identifier)) {
+            missingVariableError(identifier);
+        }
+
+        if (ctx.EQUALS_TO() != null) {
+            visit(ctx.num_expr());
+        }
     }
 
     @Override
