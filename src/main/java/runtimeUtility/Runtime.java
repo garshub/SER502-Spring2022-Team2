@@ -1,9 +1,6 @@
 package runtimeUtility;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import static runtimeUtility.Constants.*;
 
@@ -54,12 +51,12 @@ public class Runtime {
 
         DataType left = getDataValue(instruction[2]);
         DataType right = getDataValue(instruction[3]);
-        String leftDatatype = left.getDataType();
-        String rightDatatype = right.getDataType();
+        String leftDatatype = left != null ? left.getDataType() : null;
+        String rightDatatype = right != null ? right.getDataType() : null;
 
-        if (leftDatatype != rightDatatype) {
+        if (!leftDatatype.equals(rightDatatype)) {
             throw new Exception("Data mismatch");
-        } else if (leftDatatype == rightDatatype && !leftDatatype.equalsIgnoreCase("integer")) {
+        } else if (!leftDatatype.equalsIgnoreCase("integer")) {
             throw new Exception("Arithmetic exception Can't be performed on boolean type");
         } else {
             int leftOperand = left.dataAsInteger();
@@ -78,12 +75,12 @@ public class Runtime {
 
         DataType left = getDataValue(instruction[2]);
         DataType right = getDataValue(instruction[3]);
-        String leftDatatype = left.getDataType();
-        String rightDatatype = right.getDataType();
+        String leftDatatype = left != null ? left.getDataType() : null;
+        String rightDatatype = right != null ? right.getDataType() : null;
 
-        if (leftDatatype != rightDatatype) {
+        if (!leftDatatype.equals(rightDatatype)) {
             throw new Exception("Data mismatch");
-        } else if (leftDatatype == rightDatatype && !leftDatatype.equalsIgnoreCase("integer")) {
+        } else if (!leftDatatype.equalsIgnoreCase("integer")) {
             boolean leftOperand = getValue(instruction[2]).dataAsBoolean();
             boolean rightOperand = getValue(instruction[3]).dataAsBoolean();
             switch (instruction[0]) {

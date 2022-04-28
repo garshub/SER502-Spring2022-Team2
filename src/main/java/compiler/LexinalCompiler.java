@@ -513,8 +513,8 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
             if (ctx.getText().contains(",") && ctx.IDENTIFIER() != null) {
                 visit(ctx.VALID_STRING(0));
                 intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING(0).getText());
-            } else if (ctx.getText().startsWith(":") && ctx.getText().endsWith(":")) {
-                intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.getText());
+            } else if (ctx.VALID_STRING(0) != null) {
+                intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING(0).getText());
             }
         }
 
