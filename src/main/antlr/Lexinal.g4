@@ -150,7 +150,7 @@ IDENTIFIER
 
 // --valid Strings
 VALID_STRING
-    : ':' [a-zA-Z0-9]* ':'
+    : ':' [a-zA-Z0-9_]* ':'
     ;
 
 // --assignment operator
