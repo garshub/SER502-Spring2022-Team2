@@ -462,9 +462,6 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     @Override
     public Object visitPrint(LexinalParser.PrintContext ctx) {
 
-        // : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
-        // | 'print' '(' VALID_STRING ',' (IDENTIFIER|BOOLEAN|VALID_STRING|DIGITS) ')'
-
         if (ctx.VALID_STRING() != null) {
             if (ctx.getText().contains(",") && ctx.IDENTIFIER() != null) {
                 visit(ctx.VALID_STRING(0));
