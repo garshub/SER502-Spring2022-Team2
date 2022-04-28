@@ -91,27 +91,19 @@ rangeVal
 	;
 
 for_loop
-    : 'for' '(' assignment_command ';' bool_expr ';' variable_change_part ')' block 'end-for'
+    : 'for' '(' assignment_expr ';' bool_expr ';' variable_change_part ')' block 'end-for'
     ;
-
 
 variable_change_part : increment_expression
                         | decrement_expression
                         |IDENTIFIER EQUALS_TO num_expr;
 
-decrement_expression : IDENTIFIER decrement_operator
-                       | decrement_operator IDENTIFIER;
+decrement_expression : IDENTIFIER '--'
+                       | '--' IDENTIFIER;
 
 
-increment_expression : IDENTIFIER increment_operator
-                       | increment_operator IDENTIFIER;
-
-decrement_operator : '--';
-increment_operator : '++';
-
-assignment_command
-    : 'int' IDENTIFIER EQUALS_TO num_expr
-    ;
+increment_expression : IDENTIFIER '++'
+                       | '++' IDENTIFIER;
 
 ternary_expr
     : cond_expr '?' exprs ':' exprs
