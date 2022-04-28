@@ -192,24 +192,6 @@ public interface LexinalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIncrement_expression(LexinalParser.Increment_expressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LexinalParser#decrement_operator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDecrement_operator(LexinalParser.Decrement_operatorContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link LexinalParser#increment_operator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIncrement_operator(LexinalParser.Increment_operatorContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link LexinalParser#assignment_command}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssignment_command(LexinalParser.Assignment_commandContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link LexinalParser#ternary_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -314,36 +314,6 @@ public interface LexinalListener extends ParseTreeListener {
 	 */
 	void exitIncrement_expression(LexinalParser.Increment_expressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LexinalParser#decrement_operator}.
-	 * @param ctx the parse tree
-	 */
-	void enterDecrement_operator(LexinalParser.Decrement_operatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link LexinalParser#decrement_operator}.
-	 * @param ctx the parse tree
-	 */
-	void exitDecrement_operator(LexinalParser.Decrement_operatorContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link LexinalParser#increment_operator}.
-	 * @param ctx the parse tree
-	 */
-	void enterIncrement_operator(LexinalParser.Increment_operatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link LexinalParser#increment_operator}.
-	 * @param ctx the parse tree
-	 */
-	void exitIncrement_operator(LexinalParser.Increment_operatorContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link LexinalParser#assignment_command}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignment_command(LexinalParser.Assignment_commandContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link LexinalParser#assignment_command}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignment_command(LexinalParser.Assignment_commandContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link LexinalParser#ternary_expr}.
 	 * @param ctx the parse tree
 	 */
