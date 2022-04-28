@@ -477,7 +477,31 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     @Override
     public Object visitTernary_expr(LexinalParser.Ternary_exprContext ctx) {
         //TODO
+        intermediateCode.addIntermediateOutput(Constants.IF_ELSE_START);
+        intermediateCode.addIntermediateOutput(Constants.IF_START);
+        visit(ctx.cond_expr());
+        // block1
+        ternaryBlock(ctx, 0);
+        intermediateCode.addIntermediateOutput(Constants.IF_END);
+        intermediateCode.addIntermediateOutput(Constants.ELSE_START);
+        //block2
+        ternaryBlock(ctx, 1);
+        intermediateCode.addIntermediateOutput(Constants.ELSE_END);
+        intermediateCode.addIntermediateOutput(Constants.IF_ELSE_END);
         return null;
+    }
+
+    public void ternaryBlock(LexinalParser.Ternary_exprContext ctx, int index){
+        if (ctx.exprs(index) != null){
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " " +ctx.exprs(index).getText());
+        } else if (ctx.BOOLEAN(index) != null){
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " " +ctx.BOOLEAN(index).getText());
+        } else if (ctx.VALID_STRING(index) != null){
+            intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " " +ctx.VALID_STRING(index).getText());
+        }
     }
 
     @Override

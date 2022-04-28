@@ -1,0 +1,16 @@
+start
+{
+    int a = 10
+    int b = 20
+    if(a > b)
+    {
+        print(a)
+    }
+    else
+    {
+        print(b)
+    }
+    end-else
+    end-if
+}
+end
