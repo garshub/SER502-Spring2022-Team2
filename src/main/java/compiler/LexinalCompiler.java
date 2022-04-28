@@ -59,7 +59,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         if (ctx.EQUALS_TO() != null) {
             //if initialization done during declaration
-            if(ctx.getText().contains("?") && ctx.getText().contains(":")){
+            if (ctx.getText().contains("?") && ctx.getText().contains(":")) {
                 visit(ctx.ternary_expr());
             } else {
                 visit(ctx.num_expr());
@@ -88,7 +88,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
-            if(ctx.getText().contains("?") && ctx.getText().contains(":")){
+            if (ctx.getText().contains("?") && ctx.getText().contains(":")) {
                 visit(ctx.ternary_expr());
             } else {
                 visit(ctx.bool_expr());
@@ -117,7 +117,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
         if (ctx.EQUALS_TO() != null) {
             //if initialization and assignment done during declaration
-            if(ctx.getText().contains("?") && ctx.getText().contains(":")){
+            if (ctx.getText().contains("?") && ctx.getText().contains(":")) {
                 visit(ctx.ternary_expr());
             } else {
                 //visit(ctx.VALID_STRING());
@@ -375,85 +375,82 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitFor_enhanced(LexinalParser.For_enhancedContext ctx) {
-        intermediateCode.addIntermediateOutput(Constants.FOR_ENHANCED_START);
-        visit(ctx.IDENTIFIER());
-        intermediateCode.addIntermediateOutput(Constants.RANGE_BLOCK_START);
-        visit(ctx.rangeVal());
-        visit(ctx.rangeVal());
-        intermediateCode.addIntermediateOutput(Constants.RANGE_BLOCK_END);
-        visit(ctx.block());
-        intermediateCode.addIntermediateOutput(Constants.FOR_ENHANCED_END);
+        //TODO
         return null;
     }
 
     @Override
     public Object visitRangeVal(LexinalParser.RangeValContext ctx) {
-        visit(ctx.IDENTIFIER());
-        visit(ctx.DIGITS());
+        String value = "0";
+        if(ctx.DIGITS() != null){
+            value = ctx.DIGITS().getText();
+        } else if (ctx.IDENTIFIER() != null){
+            value = ctx.IDENTIFIER().getText();
+        }
+
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + Constants.ACCUMULATOR_REGISTER + " " + value);
         return null;
     }
 
     @Override
     public Object visitFor_loop(LexinalParser.For_loopContext ctx) {
-        visit(ctx.assignment_command());
-        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.FOR_LOOP_START);
-        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.COMPARISION_START);
+        visit(ctx.assignment_expr());
+        intermediateCode.addIntermediateOutput(Constants.FOR_START);
+        intermediateCode.addIntermediateOutput(Constants.CONDITION_START);
         visit(ctx.bool_expr());
-        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.COMPARISION_END);
-        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.CONDITION_END);
         visit(ctx.variable_change_part());
-        intermediateCodeGenerator.addIntermediateOutput(RaceRuntimeConstant.FOR_LOOP_END);
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.FOR_END);
         return null;
     }
 
     @Override
     public Object visitVariable_change_part(LexinalParser.Variable_change_partContext ctx) {
         if (ctx.increment_expression() != null) {
-            visit(ctx.increment_expression())
-        }
-        else
-        visit(ctx.decrement_expression());
-
-        if (ctx.EQUALS_TO() != null) {
+            visit(ctx.increment_expression());
+        } else if (ctx.decrement_expression() != null) {
+            visit(ctx.decrement_expression());
+        } else if (ctx.num_expr() != null) {
             visit(ctx.num_expr());
         }
 
         return null;
     }
 
+    public void updateIdentifierInFor(String operation, String identifier, String constant){
+        //load ACC i
+        //load E ACC
+        //load ACC 1
+        //load F ACC
+        //Operation ACC E F
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
+                Constants.ACCUMULATOR_REGISTER  + " " + identifier);
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + Constants.REGISTER_FOUR + " " + Constants.ACCUMULATOR_REGISTER);
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + Constants.ACCUMULATOR_REGISTER + " " + constant);
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + Constants.REGISTER_FIVE + " " + Constants.ACCUMULATOR_REGISTER);
+        intermediateCode.addIntermediateOutput(operation + " " + Constants.ACCUMULATOR_REGISTER + " "
+                + Constants.REGISTER_FOUR + " " + Constants.REGISTER_FIVE);
+    }
+
     @Override
     public Object visitDecrement_expression(LexinalParser.Decrement_expressionContext ctx) {
-        return super.visitDecrement_expression(ctx);
+        updateIdentifierInFor(Constants.SUBTRACTION, ctx.IDENTIFIER().getText(), "1");
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
+                ctx.IDENTIFIER().getText() + " " + Constants.ACCUMULATOR_REGISTER);
+        return null;
     }
 
     @Override
     public Object visitIncrement_expression(LexinalParser.Increment_expressionContext ctx) {
-        return super.visitIncrement_expression(ctx);
-    }
-
-    @Override
-    public Object visitDecrement_operator(LexinalParser.Decrement_operatorContext ctx) {
-        return super.visitDecrement_operator(ctx);
-    }
-
-    @Override
-    public Object visitIncrement_operator(LexinalParser.Increment_operatorContext ctx) {
-        return super.visitIncrement_operator(ctx);
-    }
-
-    @Override
-    public Object visitAssignment_command(LexinalParser.Assignment_commandContext ctx) {
-        String identifier = ctx.IDENTIFIER().getText();
-
-        if (ctx.getText().contains("int")) {
-            addVariableToList(identifier);
-        } else if (!doesVariableExist(identifier)) {
-            missingVariableError(identifier);
-        }
-
-        if (ctx.EQUALS_TO() != null) {
-            visit(ctx.num_expr());
-        }
+        updateIdentifierInFor(Constants.ADDITION, ctx.IDENTIFIER().getText(), "1");
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
+                ctx.IDENTIFIER().getText() + " " + Constants.ACCUMULATOR_REGISTER);
+        return null;
     }
 
     @Override
@@ -468,11 +465,11 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         // : 'print' '(' (DIGITS|BOOLEAN|IDENTIFIER|num_expr|bool_expr|VALID_STRING) ')'
         // | 'print' '(' VALID_STRING ',' (IDENTIFIER|BOOLEAN|VALID_STRING|DIGITS) ')'
 
-        if (ctx.VALID_STRING() != null){
-            if(ctx.getText().contains(",") && ctx.IDENTIFIER() != null){
+        if (ctx.VALID_STRING() != null) {
+            if (ctx.getText().contains(",") && ctx.IDENTIFIER() != null) {
                 visit(ctx.VALID_STRING(0));
                 intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.VALID_STRING(0).getText());
-            } else if (ctx.getText().startsWith(":") && ctx.getText().endsWith(":")){
+            } else if (ctx.getText().startsWith(":") && ctx.getText().endsWith(":")) {
                 intermediateCode.addIntermediateOutput(Constants.WRITE_INSTRUCTION + " " + ctx.getText());
             }
         }
