@@ -375,7 +375,28 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitFor_enhanced(LexinalParser.For_enhancedContext ctx) {
-        //TODO
+        String identifier = ctx.IDENTIFIER().getText();
+        addVariableToList(identifier);
+        visit(ctx.rangeVal(0));
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + identifier + " " + Constants.ACCUMULATOR_REGISTER);
+        intermediateCode.addIntermediateOutput(Constants.FOR_START);
+        intermediateCode.addIntermediateOutput(Constants.CONDITION_START);
+
+        String maxRange;
+        if(ctx.rangeVal(1).IDENTIFIER() != null){
+            maxRange = ctx.rangeVal(1).IDENTIFIER().getText();
+        } else {
+            maxRange = ctx.rangeVal(1).DIGITS().getText();
+        }
+        updateIdentifierInFor(Constants.LT, identifier, maxRange);
+        intermediateCode.addIntermediateOutput(Constants.CONDITION_END);
+        updateIdentifierInFor(Constants.ADDITION, ctx.IDENTIFIER().getText(), "1");
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " " +
+                ctx.IDENTIFIER().getText() + " " + Constants.ACCUMULATOR_REGISTER);
+        visit(ctx.block());
+        intermediateCode.addIntermediateOutput(Constants.FOR_END);
+
         return null;
     }
 
