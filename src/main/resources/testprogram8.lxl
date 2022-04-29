@@ -2,17 +2,15 @@ start
 {
     #comment
 
-    int j = 0
-
-    print(:hello:)
-
-    print(:printing_using_while:)
-
-    while(j <= 10)
+    for (int i = 0; i<5; i++)
     {
-        print(j)
-        j = j + 1
+        print(:i__:, i)
+        for(int j = 0; j<2; j++)
+        {
+            print(:j__:, j)
+        }
+        end-for
     }
-    end-while
+    end-for
 }
 end
