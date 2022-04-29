@@ -5,7 +5,7 @@ Design and Documentation: Navya and Manish
 Grammar: Kanti, Shubham
 
 Milestone 2 
-Lexer: Shubham
-Parser: Kanti
-Compilation and Integration: Navya
+Lexer and Compiler: Shubham
+Grammer and Parser: Kanti
+Interpreter: Shubham and Navya
 Script Testing: Manish
