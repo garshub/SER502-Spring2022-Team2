@@ -421,8 +421,8 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         intermediateCode.addIntermediateOutput(Constants.CONDITION_START);
         visit(ctx.bool_expr());
         intermediateCode.addIntermediateOutput(Constants.CONDITION_END);
-        visit(ctx.variable_change_part());
         visit(ctx.block());
+        visit(ctx.variable_change_part());
         intermediateCode.addIntermediateOutput(Constants.FOR_END);
         return null;
     }
