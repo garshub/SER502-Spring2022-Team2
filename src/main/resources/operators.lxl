@@ -3,10 +3,16 @@ start
     int a = 10
     int b = 20
     int c = a + b
+    int sub = a - b
     int d = a * b
     int e = b/a
+
+    int bodmas = ((2 + 3) * (4)) / (2 + 3)
+
     print(:sum: , c)
+    print(:subtraction:, sub)
     print(:multiply: , d)
     print(:division: , e)
+    print(:bodmas:, bodmas)
 }
 end

@@ -211,39 +211,39 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     public Object visitNumberComparisonExpression(LexinalParser.NumberComparisonExpressionContext ctx) {
         visit(ctx.num_expr(0));
         intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
-                + Constants.REGISTER_TWO + " "
+                + Constants.REGISTER_THREE+ " "
                 + Constants.ACCUMULATOR_REGISTER);
         visit(ctx.num_expr(1));
         intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
-                + Constants.REGISTER_THREE + " "
+                + Constants.REGISTER_FOUR + " "
                 + Constants.ACCUMULATOR_REGISTER);
 
         //GREATER_THAN|LESS_THAN|MORE_THAN_OR_EQUL|LESS_THAN_OR_EQUL|IS_EQUL_TO|NOT_EQUL_TO
         switch (ctx.op.getType()) {
             case LexinalParser.GREATER_THAN -> intermediateCode.addIntermediateOutput(Constants.GT + " "
                     + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.REGISTER_THREE + " "
+                    + Constants.REGISTER_FOUR);
             case LexinalParser.LESS_THAN -> intermediateCode.addIntermediateOutput(Constants.LT + " "
                     + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.REGISTER_THREE + " "
+                    + Constants.REGISTER_FOUR);
             case LexinalParser.MORE_THAN_OR_EQUL -> intermediateCode.addIntermediateOutput(Constants.GTE + " "
                     + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.REGISTER_THREE + " "
+                    + Constants.REGISTER_FOUR);
             case LexinalParser.LESS_THAN_OR_EQUL -> intermediateCode.addIntermediateOutput(Constants.LTE + " "
                     + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.REGISTER_THREE + " "
+                    + Constants.REGISTER_FOUR);
             case LexinalParser.IS_EQUL_TO -> intermediateCode.addIntermediateOutput(Constants.EQUAL_TO + " "
                     + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.REGISTER_THREE + " "
+                    + Constants.REGISTER_FOUR);
             case LexinalParser.NOT_EQUL_TO -> intermediateCode.addIntermediateOutput(Constants.NOT_EQUAL_TO + " "
                     + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.REGISTER_THREE + " "
+                    + Constants.REGISTER_FOUR);
         }
         return null;
     }
@@ -258,8 +258,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         String reg2 = Constants.REGISTER_THREE;
 
         if(ctx.num_expr(1).getChildCount() > ctx.num_expr(0).getChildCount()) {
-            tree1 = 1;
-            tree2 = 0;
+            tree1 = 1; tree2 = 0;
         }
 
         if(!((ctx.num_expr(1).getChildCount() > 2) && (ctx.num_expr(0).getChildCount() > 2))) {
@@ -294,8 +293,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
         String reg2 = Constants.REGISTER_THREE;
 
         if(ctx.num_expr(1).getChildCount() > ctx.num_expr(0).getChildCount()) {
-            tree1 = 1;
-            tree2 = 0;
+            tree1 = 1; tree2 = 0;
         }
 
         if(!((ctx.num_expr(1).getChildCount() > 2) && (ctx.num_expr(0).getChildCount() > 2))) {
@@ -513,7 +511,7 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
 
     @Override
     public Object visitTernary_expr(LexinalParser.Ternary_exprContext ctx) {
-        //TODO
+
         intermediateCode.addIntermediateOutput(Constants.IF_ELSE_START);
         intermediateCode.addIntermediateOutput(Constants.IF_START);
         visit(ctx.cond_expr());
