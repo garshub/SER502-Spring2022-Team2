@@ -3,7 +3,7 @@ Welcome to SER 502 Group project by Team 2! :smile:
 
 We have implemented an imperitive programming language "Lexinal". Its grammar is designed using Antlr and the compiler is written in Java. 
 
-## Features
+## Features 
   - Datatypes supported: int, boolean, string
   - Arithmetic operators: +, -, *, /
   - Boolean operators: and, or, not, >, >=, <, <=, ==
@@ -69,7 +69,7 @@ To run this language, you need to locate `Lexinal.jar` (SER502-Spring2022-Team2/
     
     2. Run via JAR:
   
-      a. In the terminal, navigate to the directory where the Levinal.jar is present.
+      a. In the terminal, navigate to the directory where the Lexinal.jar is present.
       b. Write your lexinal code and save it with .lxl extension (Ex - input.lxl) 
       c. Open a cmd prompt or a terminal where your Lexinal.jar is. (Can be done in IntelliJ Terminal).
       d. Side note, the input.lxl file can be anywhere, just give it absolute path in the cmd prompt.
