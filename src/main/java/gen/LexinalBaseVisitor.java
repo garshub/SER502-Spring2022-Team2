@@ -136,6 +136,13 @@ public class LexinalBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitCond_expr(LexinalParser.Cond_exprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

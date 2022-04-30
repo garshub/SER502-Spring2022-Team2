@@ -8,7 +8,7 @@ start
     int c = (a > b) ? 10 : 20
     print(:value_calculated_using_ternary_operator:, c)
 
-    int add = a * b
+    int add = a + b
     print(:addition_a_b:, add)
 
     int sub = a - b

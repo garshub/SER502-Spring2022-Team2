@@ -251,34 +251,71 @@ public class LexinalCompiler extends LexinalBaseVisitor<Object> {
     @Override
     public Object visitNumberMultiplyDivideExpression(LexinalParser.NumberMultiplyDivideExpressionContext ctx) {
 
-        visit(ctx.num_expr(0));
+        int tree1 = 0;
+        int tree2 = 1;
+
+        String reg1 = Constants.REGISTER_TWO;
+        String reg2 = Constants.REGISTER_THREE;
+
+        if(ctx.num_expr(1).getChildCount() > ctx.num_expr(0).getChildCount()) {
+            tree1 = 1;
+            tree2 = 0;
+        }
+
+        if(!((ctx.num_expr(1).getChildCount() > 2) && (ctx.num_expr(0).getChildCount() > 2))) {
+            reg1 = Constants.REGISTER_THREE;
+            reg2 = Constants.REGISTER_FOUR;
+        }
+
+        visit(ctx.num_expr(tree1));
         intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
-                + Constants.REGISTER_TWO + " "
-                + Constants.ACCUMULATOR_REGISTER);
-        visit(ctx.num_expr(1));
+                + reg1 + " " + Constants.ACCUMULATOR_REGISTER);
+        visit(ctx.num_expr(tree2));
         intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
-                + Constants.REGISTER_THREE + " "
-                + Constants.ACCUMULATOR_REGISTER);
+                + reg2 + " " + Constants.ACCUMULATOR_REGISTER);
+
+        switch (ctx.op.getType()) {
+            case LexinalParser.MUL -> intermediateCode.addIntermediateOutput(Constants.MULTIPLICATION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " " + reg1 + " " + reg2);
+            case LexinalParser.DIV -> intermediateCode.addIntermediateOutput(Constants.DIVISION + " "
+                    + Constants.ACCUMULATOR_REGISTER + " " + reg1 + " " + reg2);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object visitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx) {
+
+        int tree1 = 0;
+        int tree2 = 1;
+
+        String reg1 = Constants.REGISTER_TWO;
+        String reg2 = Constants.REGISTER_THREE;
+
+        if(ctx.num_expr(1).getChildCount() > ctx.num_expr(0).getChildCount()) {
+            tree1 = 1;
+            tree2 = 0;
+        }
+
+        if(!((ctx.num_expr(1).getChildCount() > 2) && (ctx.num_expr(0).getChildCount() > 2))) {
+            reg1 = Constants.REGISTER_THREE;
+            reg2 = Constants.REGISTER_FOUR;
+        }
+
+        visit(ctx.num_expr(tree1));
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + reg1 + " " + Constants.ACCUMULATOR_REGISTER);
+        visit(ctx.num_expr(tree2));
+        intermediateCode.addIntermediateOutput(Constants.STORE_INSTRUCTION + " "
+                + reg2 + " " + Constants.ACCUMULATOR_REGISTER);
 
         switch (ctx.op.getType()) {
             case LexinalParser.ADD -> intermediateCode.addIntermediateOutput(Constants.ADDITION + " "
-                    + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.ACCUMULATOR_REGISTER + " " + reg1 + " " + reg2);
             case LexinalParser.SUB -> intermediateCode.addIntermediateOutput(Constants.SUBTRACTION + " "
-                    + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
-            case LexinalParser.MUL -> intermediateCode.addIntermediateOutput(Constants.MULTIPLICATION + " "
-                    + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
-            case LexinalParser.DIV -> intermediateCode.addIntermediateOutput(Constants.DIVISION + " "
-                    + Constants.ACCUMULATOR_REGISTER + " "
-                    + Constants.REGISTER_TWO + " "
-                    + Constants.REGISTER_THREE);
+                    + Constants.ACCUMULATOR_REGISTER + " " + reg1 + " " + reg2);
         }
-
         return null;
     }
 

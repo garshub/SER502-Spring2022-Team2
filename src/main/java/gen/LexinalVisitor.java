@@ -126,6 +126,13 @@ public interface LexinalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumberOnly(LexinalParser.NumberOnlyContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code numberAddSubExpression}
+	 * labeled alternative in {@link LexinalParser#num_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LexinalParser#cond_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

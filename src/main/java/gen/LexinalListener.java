@@ -204,6 +204,18 @@ public interface LexinalListener extends ParseTreeListener {
 	 */
 	void exitNumberOnly(LexinalParser.NumberOnlyContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code numberAddSubExpression}
+	 * labeled alternative in {@link LexinalParser#num_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numberAddSubExpression}
+	 * labeled alternative in {@link LexinalParser#num_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberAddSubExpression(LexinalParser.NumberAddSubExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LexinalParser#cond_expr}.
 	 * @param ctx the parse tree
 	 */

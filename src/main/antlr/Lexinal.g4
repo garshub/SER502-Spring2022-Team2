@@ -49,7 +49,8 @@ comp_expr
 
 // --arithmetic expressions
 num_expr
-    : num_expr op=(ADD|SUB|MUL|DIV) num_expr            # numberMultiplyDivideExpression
+    : num_expr op=(MUL|DIV) num_expr                    # numberMultiplyDivideExpression
+    | num_expr op=(ADD|SUB) num_expr                    # numberAddSubExpression
     | '(' num_expr ')'                                  # numberBracketsExpression
     | SUB? DIGITS                                       # numberOnly
     | SUB? IDENTIFIER                                   # numberIdentifierOnly
