@@ -1,0 +1,15 @@
+start
+{
+    #Factorial
+    int f = 1
+    int i = 5
+    while(i > 0)
+    {
+        f = f * i
+        i = i - 1
+    }
+    end-while
+
+    print(f)
+}
+end
