@@ -10,6 +10,7 @@ We have implemented an imperitive programming language "Lexinal". Its grammar is
   - Ternary Operator
   - If-else, If-elseIf
   - Loops: while, for, enhanced for
+  - Nested loops and if-else ladder supported
   - Unary support for numbers and identifiers
   - Printing using print(<message>), print(<value>) and print(<message>, <value>)
   - Single line and Multi line comments
@@ -45,7 +46,7 @@ To run this language, you need to locate `Lexinal.jar` (SER502-Spring2022-Team2/
         
 ## How to build jars using IntelliJ
 
-   We have already created a jar for the project which we will use for running our code. If you are unable to use it and need to create a new one, follow these steps.   
+   We have already created a jar for you :smirk_cat: which can be used for running our code. If you are unable to use it and need to create a new one, follow these steps.   
    
     1. Open File >> Project Structure (Ctrl+Alt+Shift+S)
     2. Select Artifacts and click on + (Alt+Insert)
@@ -57,7 +58,7 @@ To run this language, you need to locate `Lexinal.jar` (SER502-Spring2022-Team2/
     8. Lexinal.jar should be created under out/artifacts/Lexinal_jar
   
 
-## How to run any program using this custom language
+## Steps to run a Lexinal Program
 
     1. Run via IntelliJ
       a. Maven Clean and Install the Project once.
@@ -68,10 +69,10 @@ To run this language, you need to locate `Lexinal.jar` (SER502-Spring2022-Team2/
     
     2. Run via JAR:
   
-    a. In the terminal, navigate to the directory where the Levinal.jar is present.
-    b. Write your lexinal code and save it with .lxl extension (Ex - input.lxl) 
-    c. Open a cmd prompt or a terminal where your Lexinal.jar is. (Can be done in IntelliJ Terminal).
-    d. Side note, the input.lxl file can be anywhere, just give it absolute path in the cmd prompt.
+      a. In the terminal, navigate to the directory where the Levinal.jar is present.
+      b. Write your lexinal code and save it with .lxl extension (Ex - input.lxl) 
+      c. Open a cmd prompt or a terminal where your Lexinal.jar is. (Can be done in IntelliJ Terminal).
+      d. Side note, the input.lxl file can be anywhere, just give it absolute path in the cmd prompt.
   
  
 ## Terminal Command to execute a Lexinal File:
