@@ -1,0 +1,29 @@
+start
+{
+    int a = 10
+    int b = 20
+    int c = b - a
+    int d = a
+
+    if(c == d)
+    {
+        print(:c_equal_d:)
+    }
+    elseIf(c not d)
+    {
+        print(:c_not_equal_d:)
+    }
+    end-elseIf
+    end-if
+
+    boolean t = true
+    boolean f = false
+
+    if(t or f)
+    {
+        print(:t_or_f_is_true:)
+    }
+    end-if
+
+}
+end
