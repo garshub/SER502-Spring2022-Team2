@@ -14,6 +14,7 @@ Shubham Garg:
         Enhanced for expression
         Ternary operator
     2) Implemented runtime logic for:
+        For and While Loops
     3) Testing and Bug fixes
     4) Documentation
 
@@ -36,6 +37,8 @@ Navya:
     Implemented the intermediate code generation logic for:
         else-if construct
         ternary construct
+    Runtime logic for:
+        operators
     Documentation
 
 
