@@ -1,6 +1,6 @@
 Team members:
 Shubham Garg (sgarg49)
-Kanti Nizampatnam ()
+Kanti Nizampatnam (knizampatnam)
 Navya ()
 Manish ()
 
@@ -23,14 +23,14 @@ Shubham Garg:
 Kanti Nizampatnam:
 
     Grammar
-    Implemented the intermediate code generation logic for:
+    1) Implemented the intermediate code generation logic for:
         For expression
         Nested For expression
         While Expression
         Nested While Expression
-     Runtime logic for:
+    2) Runtime logic for:
         Arithmetic and Boolean operators
-    Documentation
+    3) Documentation
 
 
 
