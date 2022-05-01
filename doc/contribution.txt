@@ -11,13 +11,13 @@ Shubham Garg:
         Integer and Boolean Assignments
         Boolean Expression
         If and else expression
-        Enhanced for expression
+        Enhanced for loop
         Ternary operator
-        Arithmetic operators
-    2) Implemented runtime logic for:
+        Arithmetic operator
+    2) Implemented runtime logic for following as well:
         For and While Loops
     3) Testing and Bug fixes
-    4) Documentation
+    4) Documentation and video editing.
 
 
 Kanti Nizampatnam:
