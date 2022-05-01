@@ -1,23 +1,49 @@
-----------------------
-Milestone 1:
-----------------------
-Our progress for Milestone 1 is to create grammar and start working on design of the language.
+Team members:
+Shubham Garg (sgarg49)
+Kanti Nizampatnam ()
+Navya ()
+Manish ()
 
-Design and Documentation: Navya and Manish
-Grammar: Kanti, Shubham
-
-----------------------
-Milestone 2:
-----------------------
+Contributions:
 
 Shubham Garg:
+    1) Implemented the intermediate code generation logic and runtime logic for the following constructs:
+        Integer, Boolean, and String Assignments
+        Boolean Expression
+        If and else expression
+        Enhanced for expression
+        Ternary operator
+    2) Implemented runtime logic for:
+    3) Testing and Bug fixes
+    4) Documentation
 
 
 Kanti Nizampatnam:
 
+    Grammar
+    Implemented the intermediate code generation logic for:
+        For expression
+        Nested For expression
+        While Expression
+        Nested While Expression
+    Documentation
+
+
 
 Navya:
-
+    Tree construction using Antlr
+    Lexer and Parser
+    Implemented the intermediate code generation logic for:
+        else-if construct
+        ternary construct
+    Documentation
 
 
 Manish:
+    Testing
+    Implemented the intermediate code generation logic for:
+        Conditional Expression
+    Runtime logic for:
+        Number expression
+        Conditional expression
+    Documentation
