@@ -8,11 +8,12 @@ Contributions:
 
 Shubham Garg:
     1) Implemented the intermediate code generation logic and runtime logic for the following constructs:
-        Integer, Boolean, and String Assignments
+        Integer and Boolean Assignments
         Boolean Expression
         If and else expression
         Enhanced for expression
         Ternary operator
+        Arithmetic operators
     2) Implemented runtime logic for:
         For and While Loops
     3) Testing and Bug fixes
@@ -27,6 +28,8 @@ Kanti Nizampatnam:
         Nested For expression
         While Expression
         Nested While Expression
+     Runtime logic for:
+        Arithmetic and Boolean operators
     Documentation
 
 
@@ -35,10 +38,10 @@ Navya:
     Tree construction using Antlr
     Lexer and Parser
     Implemented the intermediate code generation logic for:
+        String Assignments
         else-if construct
-        ternary construct
     Runtime logic for:
-        operators
+        String Assignments
     Documentation
 
 
