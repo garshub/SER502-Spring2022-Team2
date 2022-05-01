@@ -1,0 +1,18 @@
+start
+{
+    int a = 10
+    int b = 20
+    int sum = a + b
+    int diff = a - b
+    int mul = a * b
+    int div = b/a
+
+    int bodmas = ((2 + 3) * (4)) / (2 + 3)
+
+    print(:sum: , sum)
+    print(:subtraction:, diff)
+    print(:multiply: , mul)
+    print(:division: , div)
+    print(:bodmas:, bodmas)
+}
+end

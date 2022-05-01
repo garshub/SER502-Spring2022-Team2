@@ -1,0 +1,23 @@
+start
+{
+    int a = 10
+    int b = 20
+    int c = 30
+
+    if((a > b) and (a > c))
+    {
+        print(a)
+    }
+    elseIf ((b > a) and (b > c))
+    {
+        print(b)
+    }
+    end-elseIf
+    else
+    {
+        print(c)
+    }
+    end-else
+    end-if
+}
+end

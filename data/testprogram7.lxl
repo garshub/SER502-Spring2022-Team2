@@ -1,0 +1,57 @@
+start
+{
+    #comment
+
+    print(:hello:)
+    int a = 10
+    int b = 20
+    int c = (a > b) ? 10 : 20
+    print(:value_calculated_using_ternary_operator:, c)
+
+    int add = a + b
+    print(:addition_a_b:, add)
+
+    int sub = a - b
+    print(:subtraction_a_b:, sub)
+
+    int mul = a * b
+    print(:product_a_b:, mul)
+
+    int div = b/a
+    print(:division_d_a:, div)
+
+    int d = 10
+    int e = a
+
+    print(:val_d:, d)
+    print(:val_e:, e)
+    if(d == e)
+    {
+        print(:d_equal_to_e:)
+    }
+    else
+    {
+        print(:d_not_equal_to_e:)
+    }
+    end-else
+    end-if
+
+    print(:printing_using_for:)
+
+    for i in range (0; 10)
+    {
+        print(i)
+    }
+    end-for
+
+    print(:printing_using_while:)
+    int j = 0
+
+    while(j < 10)
+    {
+        print(j)
+        j = j + 1
+    }
+    end-while
+}
+end
